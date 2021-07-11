@@ -1,0 +1,29 @@
+extends layout
+
+block content
+  .row
+    .col
+      p column 1
+      table.table
+        thead
+          tr
+            th(scope="col") Category 
+            th(scope="col") Subcategory
+            th
+        tbody
+          each item in data
+            tr
+              td=item.mainCat
+              td=item.subCat
+              
+    .col
+      h2 Create New
+      form(action="/addcategory/insert-new" method="POST")
+        .mb-3
+          label(for="maincat" class="form-label") Category  
+          input(type="text" class="form-control" id="category" name="category")
+        .mb-3
+          label(for="subcat" class="form-label") Subcategory 
+          input(type="text" class="form-control" id="subcategory" name="subcategory")
+        
+        input(type="submit", value="Submit New" class="btn btn-success")

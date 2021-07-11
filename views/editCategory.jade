@@ -1,0 +1,57 @@
+extends layout
+
+block content
+  br
+  .row
+    .col
+      p column 1
+      table.table
+        thead
+          tr
+            th(scope="col") Category 
+            th(scope="col") Subcategory
+        tbody
+          each item in dataCat
+            tr
+              td=item.mainCat
+              td=item.subCat
+              td
+                form(action="/editcategory/id" method="post")
+                  input(type="hidden" value=item._id name="objectId")
+                  input(type="submit" value="edit" class="btn btn-success")
+              td
+                form(action="/editcategory/delete-id" method="post")
+                  input(type="hidden" value=item._id name="objectId")
+                  input(type="submit" value="delete" class="btn btn-danger")
+
+    .col
+      
+      h2 Edit Category
+      if dataEdit
+        form(action="/editcategory/update" method="post")
+          input(type="hidden" value=dataEdit._id name="objectId")
+          .mb-3
+            label(for="maincat" class="form-label") Category  
+            input(type="text" class="form-control" id="category" name="category" value=dataEdit.mainCat)
+          .mb-3
+            label(for="subcat" class="form-label") Subcategory 
+            input(type="text" class="form-control" id="subcategory" name="subcategory" value=dataEdit.subCat)
+          
+          input(type="submit", value="Submit Edit" class="btn btn-success")
+
+  //was not used
+  script(type='text/javascript').
+    function submit(objectId){
+      //- console.log(objectId)
+      //- alert(objectId)
+      var xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = function(){
+        if (xhr.readyState === 4){
+          alert(xhr.response)
+        }
+      }
+
+      xhr.open('get', 'https://google.com', true);
+      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+      xhr.send();
+    }

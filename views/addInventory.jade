@@ -1,0 +1,65 @@
+extends layout
+
+block content
+  .row
+    .col
+      each item in data
+        .row(style="border: 1px solid #ddd; margin-bottom:10px")
+          .col-3
+            p image 
+          .col
+            .row
+              .col
+                p Name: #{item.name}
+              .col
+                p Barcode: #{item.barcode}
+              .col
+                p Price: #{item.price}
+            .row
+              .col
+                p Category: #{item.mainCat}
+              .col
+                p Subcategory: #{item.subCat} 
+            .row(style="border: 1px solid #e6e4e4; margin-bottom:5px;margin-right: 1px;")
+              p Description:
+              p #{item.description}
+      
+    .col-5
+      p column 2
+      form(action="/addinventory/insert-new" method="post")
+        .row
+          .col
+            .mb-3
+              label(class="form-label") Image
+              input(type='file' class='form-control' name="image")
+          .col
+            .mb3
+              label(class="form-label") Name
+              input(type='text' class='form-control' name="name")
+            .row
+              .col-8
+                .mb3
+                  label(class="form-label") Barcode
+                  input(type='text' class='form-control' name="barcode")
+              .col
+                .mb3
+                  label(class="form-label") Price
+                  input(type='text' class='form-control' name="price")
+            .row
+              .col
+                .mb3
+                  label(class="form-label") Category
+                  select(name="category" class="form-control" default="none-none")
+                    each item in dataCat
+                      if item.mainCat == 'none' && item.subCat == 'none'
+                        option(value=item._id selected) #{item.mainCat} - #{item.subCat}
+                      else
+                        option(value=item._id) #{item.mainCat} - #{item.subCat} 
+
+        .row
+          .col
+            .mb3
+              label(class="form-label") Description
+              textarea(class="form-control" name="description" rows="4" cols="50" style="margin-bottom:1rem")
+          
+        input(type="submit" class="btn btn-success")
